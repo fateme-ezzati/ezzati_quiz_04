@@ -22,7 +22,7 @@ const renderTable = () => {
 
 	const url_string = window.location.href;
 	const url = new URL(url_string);
-	let sort = url.searchParams.get("sort") ? url.searchParams.get("sort") : "NO";
+	let sort = url.searchParams.get("sort") ? url.searchParams.get("sort") : "id";
 	
 	console.log(sort)
 	if(sort.includes('-')){
@@ -31,6 +31,9 @@ const renderTable = () => {
 	}else{
 		sort1(sort)
 	}
+
+
+	console.log(Object.keys(tours[0]))
 
 
 	tableHead.innerHTML = `
