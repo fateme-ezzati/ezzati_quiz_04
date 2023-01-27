@@ -2,34 +2,65 @@ const tableHead = document.querySelector('thead');
 const tableBody = document.querySelector('tbody');
 
 const renderTable = () => {
+
+	const url_string = window.location.href;
+	const url = new URL(url_string);
+	const fields = url.searchParams.get("fields") ? url.searchParams.get("fields") : "";
+
+
+	let removedList = []
+
+	if (!!fields) {
+
+		let fieldsArry = fields.split(',');
+		let len = fieldsArry.length;
+
+
+		for (let i = 0; i < len; i++) {
+
+			if (fieldsArry[i].includes('-')) {
+				removedList.push(fieldsArry[i].replace(/-/g, ''));
+			}
+		}
+
+	}
+
+	console.log(Object.values(tours[0]),removedList)
+
+
+	if (removedList.length) {
+
+		for (let i = 0; i < tours.length; i++) {
+			let obj = tours[i];
+
+			for (let j = 0; j < removedList.length; j++) {
+
+				let element = removedList[j];
+				// delete tours[i][element];
+
+				console.log("re",tours[i][element])
+			}
+		}
+	}
+
+
+
 	tableHead.innerHTML = `
 		<tr>
 			<th scope="col">No.</th>
-			<th scope="col">Tour ID</th>
-			<th scope="col">Name</th>
-			<th scope="col">Location</th>
-			<th scope="col">Price</th>
-			<th scope="col">Group Size</th>
-			<th scope="col">difficulty</th>
-			<th scope="col">duration</th>
-			<th scope="col">Ratings Average</th>
-			<th scope="col">Ratings Quantity</th>
+			${Object.keys(tours[0]).map(item=>{
+				return `<th scope="col">${item}</th>`
+			}).join('')}
+			
 		</tr>`;
 
 	let rowCount = 1;
 	for (const tour of tours) {
+		console.log('test',tour)
 		tableBody.innerHTML += `
 			<tr>
 				<th scope="row">${rowCount}</th>
-				<td>${tour.id}</td>
-				<td>${tour.name}</td>
-				<td>${tour.location}</td>
-				<td>${tour.price}</td>
-				<td>${tour.maxGroupSize}</td>
-				<td>${tour.difficulty}</td>
-				<td>${tour.duration}</td>
-				<td>${tour.ratingsAverage}</td>
-				<td>${tour.ratingsQuantity}</td>
+				${Object.values(tour).map(data => { return (`<td >${data}</td>`) }).join('')}
 			</tr>`;
 
 		rowCount += 1;
