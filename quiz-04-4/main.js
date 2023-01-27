@@ -22,6 +22,15 @@ const renderTable = () => {
 
 	console.log(searchElement, searchVal)
 
+	if(searchElement){
+		for (const tour of tours){
+			tour[index] !== searchVal
+			
+		}
+
+	}
+	
+
 	
 	tableHead.innerHTML = `
 		<tr>
