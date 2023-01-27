@@ -1,7 +1,38 @@
 const tableHead = document.querySelector('thead');
 const tableBody = document.querySelector('tbody');
 
+
+function sort1(sort){
+	if(sort === "name" || sort ==="location" || sort ==="difficulty" ){
+		tours.sort((a, b) => a[sort].localeCompare(b[sort]))
+	}else{
+		tours.sort((a, b) => a[sort] - b[sort])
+	}
+}
+
+function sort2(sort){
+	if(sort === "name" || sort ==="location" || sort ==="difficulty" ){
+		tours.sort((a, b) => b[sort].localeCompare(a[sort]))
+	}else{
+		tours.sort((a, b) => b[sort] - a[sort])
+	}
+}
+
 const renderTable = () => {
+
+	const url_string = window.location.href;
+	const url = new URL(url_string);
+	let sort = url.searchParams.get("sort") ? url.searchParams.get("sort") : "NO";
+	
+	console.log(sort)
+	if(sort.includes('-')){
+		sort = sort.replace(/-/g, '')
+		sort2(sort)
+	}else{
+		sort1(sort)
+	}
+
+
 	tableHead.innerHTML = `
 		<tr>
 			<th scope="col">No.</th>
